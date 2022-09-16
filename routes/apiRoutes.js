@@ -1,17 +1,25 @@
 const path = require('path');
 const router = require('express').Router();
+// require store
 
+// GET route to get all notes from DB
 
-// Create routes
-
-// create route for notes.html
-router.get('/api/notes', (req,res) => {
-    res.sendFile(path.join(__dirname, '../public/notes.html'));
+// server.js will add "/api" in front of filepath
+router.get('/notes', (req,res) => {
+    Store
+        .getNotes()
+        .then((notes) => res.json(notes));
 });
 
-// Use * or / to send any other route hit back to homepage
-router.get('*', (req,res) => {
-    res.sendFile(path.join(__dirname, '../public/index.html'));
+// POST route to add the notes
+router.post('/notes', (req, res) => {
+    Store.
+        addNote(req.body)
+        .then((note) => res.json(note))
 });
+
+
+
+// DELETE route to delete my note
 
 module.exports = router;
